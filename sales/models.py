@@ -4,7 +4,7 @@ from django.utils import timezone
 from products.models import Product
 from customers.models import Customer
 from profiles.models import Profile
-
+from .utils import generate_code
 # Create your models here.
 
 
@@ -25,15 +25,15 @@ class Position(models.Model):
 class Sale(models.Model):
     transactions_id = models.CharField(max_length=12, blank=True)
     positions = models.ManyToManyField(Position)
-    total_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     salesman = models.ForeignKey(Profile, on_delete=models.CASCADE)
     created_at = models.DateTimeField(blank=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def sav(self, *args, **kwargs):
+    def save(self, *args, **kwargs):
         if self.transactions_id == "":
-            self.transactions_id == ""
+            self.transactions_id = generate_code()
         if self.created_at is None:
             self.created_at = timezone.now()
         return super().save(*args, **kwargs)
@@ -42,7 +42,7 @@ class Sale(models.Model):
         return self.positions.all()
 
     def __str__(self):
-        return f"Sales for tge amount of ${self.total_price}"
+        return f"Sales for the amount of ${self.total_price}"
 
 
 class CSV(models.Model):
