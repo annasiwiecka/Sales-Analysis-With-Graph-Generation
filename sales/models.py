@@ -1,10 +1,12 @@
 from django.db import models
 from django.utils import timezone
+from django.shortcuts import reverse
 
 from products.models import Product
 from customers.models import Customer
 from profiles.models import Profile
 from .utils import generate_code
+
 # Create your models here.
 
 
@@ -23,7 +25,7 @@ class Position(models.Model):
 
 
 class Sale(models.Model):
-    transactions_id = models.CharField(max_length=12, blank=True)
+    transaction_id = models.CharField(max_length=12, blank=True)
     positions = models.ManyToManyField(Position)
     total_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
@@ -31,6 +33,9 @@ class Sale(models.Model):
     created_at = models.DateTimeField(blank=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def get_absolute_url(self):
+        return reverse("sales:detail", kwargs={"pk": self.pk})
+    
     def save(self, *args, **kwargs):
         if self.transactions_id == "":
             self.transactions_id = generate_code()
