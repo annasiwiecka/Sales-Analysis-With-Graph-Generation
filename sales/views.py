@@ -4,12 +4,14 @@ from django.views.generic import ListView, DetailView
 from .models import Sale
 from .forms import SalesSearchForm
 import pandas as pd
+from .utils import get_customer_from_id, get_salesman_from_id
 
 # Create your views here.
 
 def home(request):
     sales_df = None
     positions_dt = None
+    merged_df = None
     
     form = SalesSearchForm(request.POST or None)
     if request.method == 'POST':
@@ -18,9 +20,14 @@ def home(request):
         chart_type = request.POST.get('chart_type')
 
         sale_queryset = Sale.objects.filter(created_at__date__lte=date_to, created_at__date__gte=date_from)
-        
         if len(sale_queryset) > 0:
             sales_df = pd.DataFrame(sale_queryset.values())
+            sales_df['customer_id'] = sales_df['customer_id'].apply(get_customer_from_id)
+            sales_df['salesman_id'] = sales_df['salesman_id'].apply(get_salesman_from_id)
+            sales_df['created_at'] = sales_df['created_at'].apply(lambda x: x.strftime('%d-%m-%Y'))
+
+            sales_df.rename({'customer_id': 'customer','salesman_id': 'salesman', 'id': 'sales_id'}, axis=1, inplace=True)
+
             positions_data = []
             for sale in sale_queryset:
                 for position in sale.get_positions():
@@ -34,17 +41,20 @@ def home(request):
                     }
                     positions_data.append(obj)
 
-            positions_dt = pd.DataFrame(positions_data)
+            positions_df = pd.DataFrame(positions_data)
+            merged_df = pd.merge(sales_df, positions_df, on='sales_id')
             
             sales_df = sales_df.to_html()
-            positions_dt = positions_dt.to_html()
+            positions_df = positions_df.to_html()
+            merged_df = merged_df.to_html()
         else:
             print('no data')
         
     return render(request, 'sales/home.html', {
         'form': form,
         'sales_df': sales_df,
-        'positions_dt': positions_dt
+        'positions_df': positions_df,
+        'merged_df': merged_df
     })
 
 class SaleListView(ListView):

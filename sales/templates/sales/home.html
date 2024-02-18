@@ -17,7 +17,9 @@ Home
 {% if sales_df %}
     {{ sales_df|safe }}
     <br>
-    {{ positions_dt|safe }}
+    {{ positions_df|safe }}
+    <br>
+    {{ merged_df|safe }}
 {% else %}
     <h3>No data</h3>
 {% endif %}
