@@ -7,15 +7,17 @@ Home
 
 {% block content %}
 
-<hr>
+
 <form action="" method="POST">
     {% csrf_token %}
     {{ form|crispy }}
     <button type="submit", class="btn btn-primary">Search</button>
 </form>
-<hr>
+<br>
 {% if sales_df %}
     {{ sales_df|safe }}
+    <br>
+    {{ positions_dt|safe }}
 {% else %}
     <h3>No data</h3>
 {% endif %}
