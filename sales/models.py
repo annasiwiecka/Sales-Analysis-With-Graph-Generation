@@ -37,8 +37,8 @@ class Sale(models.Model):
         return reverse("sales:detail", kwargs={"pk": self.pk})
     
     def save(self, *args, **kwargs):
-        if self.transactions_id == "":
-            self.transactions_id = generate_code()
+        if self.transaction_id == "":
+            self.transaction_id = generate_code()
         if self.created_at is None:
             self.created_at = timezone.now()
         return super().save(*args, **kwargs)
