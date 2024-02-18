@@ -29,9 +29,9 @@ def home(request):
                         'product': position.product.name,
                         'category': position.product.category,
                         'quantity': position.quantity,
-                        'price': position.price
+                        'price': position.price,
+                        'sales_id': position.get_sales_id()
                     }
-
                     positions_data.append(obj)
 
             positions_dt = pd.DataFrame(positions_data)
