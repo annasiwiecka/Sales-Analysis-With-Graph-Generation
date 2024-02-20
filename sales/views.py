@@ -4,15 +4,18 @@ from django.views.generic import ListView, DetailView
 from .models import Sale
 from .forms import SalesSearchForm
 import pandas as pd
-from .utils import get_customer_from_id, get_salesman_from_id
+from .utils import get_customer_from_id, get_salesman_from_id, get_graph, get_chart, get_chart1
 
 # Create your views here.
 
 def home(request):
     sales_df = None
-    positions_dt = None
+    positions_df = None
     merged_df = None
     df = None
+    df_category = None
+    chart = None
+    chart1 = None
     
     form = SalesSearchForm(request.POST or None)
     if request.method == 'POST':
@@ -48,11 +51,14 @@ def home(request):
             df = merged_df.groupby('transaction_id', as_index=False)['price'].agg('sum')
             df_category = merged_df.groupby('category', as_index=False)['price'].agg('sum')
             
-            sales_df = sales_df.to_html()
-            positions_df = positions_df.to_html()
-            merged_df = merged_df.to_html()
-            df = df.to_html()
-            df_category = df_category.to_html()
+            chart = get_chart(chart_type, df, labels=df['transaction_id'].values)
+            chart1 = get_chart1(chart_type, df_category, labels=df_category['category'].values)
+
+            sales_df = sales_df.to_html(classes="table")
+            positions_df = positions_df.to_html(classes="table")
+            merged_df = merged_df.to_html(classes="table")
+            df = df.to_html(classes="table")
+            df_category = df_category.to_html(classes="table")
         else:
             print('no data')
         
@@ -62,7 +68,9 @@ def home(request):
         'positions_df': positions_df,
         'merged_df': merged_df,
         'df': df,
-        'df_category': df_category
+        'df_category': df_category,
+        'chart': chart,
+        'chart1': chart1
     })
 
 class SaleListView(ListView):

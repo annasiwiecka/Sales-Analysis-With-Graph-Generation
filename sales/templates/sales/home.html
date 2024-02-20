@@ -24,6 +24,10 @@ Home
     {{ df|safe }}
     <br>
     {{ df_category|safe }}
+    <br>
+    <img src="data:image/png;base64, {{ chart|safe }}">
+    <br>
+    <img src="data:image/png;base64, {{ chart1|safe }}">
 {% else %}
     <h3>No data</h3>
 {% endif %}
