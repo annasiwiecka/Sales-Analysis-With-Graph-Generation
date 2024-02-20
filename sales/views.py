@@ -16,7 +16,6 @@ def home(request):
     df = None
     df_category = None
     chart = None
-    chart1 = None
     
     form = SalesSearchForm(request.POST or None)
     report_form = ReportForm(request.POST or None)
@@ -24,6 +23,7 @@ def home(request):
         date_from = request.POST.get('date_from')
         date_to = request.POST.get('date_to')
         chart_type = request.POST.get('chart_type')
+        results_by = request.POST.get('results_by')
 
         sale_queryset = Sale.objects.filter(created_at__date__lte=date_to, created_at__date__gte=date_from)
         if len(sale_queryset) > 0:
@@ -53,8 +53,7 @@ def home(request):
             df = merged_df.groupby('transaction_id', as_index=False)['price'].agg('sum')
             df_category = merged_df.groupby('category', as_index=False)['price'].agg('sum')
             
-            chart = get_chart(chart_type, df, labels=df['transaction_id'].values)
-            chart1 = get_chart1(chart_type, df_category, labels=df_category['category'].values)
+            chart = get_chart(chart_type, merged_df, results_by)
 
             sales_df = sales_df.to_html(classes="table")
             positions_df = positions_df.to_html(classes="table")
@@ -73,7 +72,6 @@ def home(request):
         'df': df,
         'df_category': df_category,
         'chart': chart,
-        'chart1': chart1
     })
 
 class SaleListView(ListView):

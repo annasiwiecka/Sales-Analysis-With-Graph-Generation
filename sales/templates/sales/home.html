@@ -53,12 +53,11 @@ Home
     {{ df_category|safe }}
     <br>
     <img src="data:image/png;base64, {{ chart|safe }}" id="img">
-    <button class='btn btn-primary not-visible' id="report-btn" data-toggle="modal" data-target="#reportModal">add report</button>
-    <br>
-    <img src="data:image/png;base64, {{ chart1|safe }}" id='img1'>
-    <button class='btn btn-primary not-visible' id='report-btn1' data-toggle="modal" data-target="#reportModal">add report</button>
+
 {% else %}
     <h3>No data</h3>
 {% endif %}
+<br>
+<button class='btn btn-primary not-visible' id="report-btn" data-toggle="modal" data-target="#reportModal">add report</button>
 
 {% endblock content %}
