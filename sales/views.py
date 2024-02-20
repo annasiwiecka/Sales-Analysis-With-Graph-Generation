@@ -3,6 +3,7 @@ from django.views.generic import ListView, DetailView
 
 from .models import Sale
 from .forms import SalesSearchForm
+from reports.forms import ReportForm
 import pandas as pd
 from .utils import get_customer_from_id, get_salesman_from_id, get_graph, get_chart, get_chart1
 
@@ -18,6 +19,7 @@ def home(request):
     chart1 = None
     
     form = SalesSearchForm(request.POST or None)
+    report_form = ReportForm(request.POST or None)
     if request.method == 'POST':
         date_from = request.POST.get('date_from')
         date_to = request.POST.get('date_to')
@@ -64,6 +66,7 @@ def home(request):
         
     return render(request, 'sales/home.html', {
         'form': form,
+        'report_form': report_form,
         'sales_df': sales_df,
         'positions_df': positions_df,
         'merged_df': merged_df,
