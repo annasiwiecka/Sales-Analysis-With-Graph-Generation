@@ -19,7 +19,7 @@ def home(request):
     no_data = None
     
     form = SalesSearchForm(request.POST or None)
-    report_form = ReportForm(request.POST or None)
+    report_form = ReportForm()
     if request.method == 'POST':
         date_from = request.POST.get('date_from')
         date_to = request.POST.get('date_to')
