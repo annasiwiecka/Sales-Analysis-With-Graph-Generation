@@ -5,7 +5,7 @@ from .models import Sale
 from .forms import SalesSearchForm
 from reports.forms import ReportForm
 import pandas as pd
-from .utils import get_customer_from_id, get_salesman_from_id, get_graph, get_chart, get_chart1
+from .utils import get_customer_from_id, get_salesman_from_id, get_graph, get_chart
 
 # Create your views here.
 

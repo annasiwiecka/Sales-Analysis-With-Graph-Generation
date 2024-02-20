@@ -47,33 +47,13 @@ def get_chart(chart_type, data, results_by, **kwargs):
     key = get_key(results_by)
     d = data.groupby(key, as_index=False)["total_price"].agg("sum")
     if chart_type == "#1":
-        print("bar chart")
         sns.barplot(x=key, y="total_price", data=d, palette="Set1")
     elif chart_type == "#2":
-        print("pie chart")
-        labels = kwargs.get("labels")
-        plt.pie(data=d, x="price", labels=labels)
+        plt.pie(data=d, x="total_price", labels=d[key].values)
     elif chart_type == "#3":
-        print("line chart")
-        plt.plot(data["transaction_id"], data["price"], marker="o")
+        plt.plot(d[key], d["total_price"], marker="o")
 
     plt.tight_layout()
     chart = get_graph()
     return chart
 
-
-def get_chart1(chart_type, data, **kwargs):
-    plt.switch_backend("AGG")
-    fig = plt.figure(figsize=(10, 4))
-    if chart_type == "#1":
-        # plt.bar(data["transaction_id"], data["price"])
-        sns.barplot(x="category", y="price", data=data, palette="Set1")
-    elif chart_type == "#2":
-        labels = kwargs.get("labels")
-        plt.pie(data=data, x="price", labels=labels)
-    elif chart_type == "#3":
-        plt.plot(data["category"], data["price"], marker="o")
-
-    plt.tight_layout()
-    chart = get_graph()
-    return chart
