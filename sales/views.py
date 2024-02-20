@@ -16,6 +16,7 @@ def home(request):
     df = None
     df_category = None
     chart = None
+    no_data = None
     
     form = SalesSearchForm(request.POST or None)
     report_form = ReportForm(request.POST or None)
@@ -61,7 +62,7 @@ def home(request):
             df = df.to_html(classes="table")
             df_category = df_category.to_html(classes="table")
         else:
-            print('no data')
+            no_data = 'No data available in this date range'
         
     return render(request, 'sales/home.html', {
         'form': form,
@@ -72,6 +73,7 @@ def home(request):
         'df': df,
         'df_category': df_category,
         'chart': chart,
+        'no_data': no_data
     })
 
 class SaleListView(ListView):
