@@ -1,14 +1,18 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse, HttpResponse
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView
 from django.conf import settings
 from django.template.loader import get_template
 from xhtml2pdf import pisa
-
+import csv
+from django.utils.dateparse import parse_date
 
 from .utils import get_report_image
+from products.models import Product
 from profiles.models import Profile
 from .models import Report
+from customers.models import Customer
+from sales.models import Sale, Position, CSV
 
 # Create your views here.
 
@@ -21,6 +25,53 @@ class ReportListView(ListView):
 class ReportDetailView(DetailView):
     model = Report
     template_name = "reports/detail.html"
+
+
+class UploadTemplateView(TemplateView):
+    template_name = "reports/from_file.html"
+
+
+def csv_upload(request):
+    if request.method == "POST":
+        csv_file = request.FILES.get("file")
+        obj = CSV.objects.create(file_name=csv_file)
+
+        with open(obj.file_name.path, "r") as f:
+            reader = csv.reader(f)
+            reader.__next__()
+            for row in reader:
+
+                transaction_id = row[1]
+                product = row[2]
+                category = row[3]
+                quantity = int(row[4])
+                customer = row[5]
+                date = parse_date(row[6])
+
+                try:
+                    product_obj = Product.objects.get(name=product, category=category)
+                except Product.DoesNotExist:
+                    product_obj = None
+
+                if product_obj is not None:
+                    customer_obj, _ = Customer.objects.get_or_create(name=customer)
+                    salesman_obj = Profile.objects.get(user=request.user)
+                    position_obj = Position.objects.create(
+                        product=product_obj,
+                        quantity=quantity,
+                        created_at=date,
+                    )
+
+                    sale_obj, _ = Sale.objects.get_or_create(
+                        transaction_id=transaction_id,
+                        customer=customer_obj,
+                        salesman=salesman_obj,
+                        created_at=date,
+                    )
+                    sale_obj.positions.add(position_obj)
+                    sale_obj.save()
+
+    return HttpResponse()
 
 
 def create_report(request):

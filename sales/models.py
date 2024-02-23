@@ -56,9 +56,8 @@ class Sale(models.Model):
 
 class CSV(models.Model):
     file_name = models.FileField(upload_to="csvs")
-    activated = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.file_name
+        return str(self.file_name)

@@ -1,0 +1,9 @@
+﻿Pos,Transaction id,Product,Category,Quantity,Customer,Date
+1,E100,Tv,"TV, Audio, RTV",3,TestCustomer,20/02/2024
+2,E101,Laptop,Computers,2,TestCustomer,19/02/2024
+3,E102,Microwave,AGD,1,TestCustomer,19/02/2024
+4,E103,Subwoofer,"TV, Audio, RTV",4,TestCustomer2,15/02/2024
+5,E104,Smartphone,Smartphones,1,TestCustomer2,14/02/2024
+6,E105,Tv,"TV, Audio, RTV",6,TestCustomer,10/02/2024
+7,E106,Laptop,Computers,4,TestCustomer2,02/02/2024
+8,E107,Microwave,AGD,3,TestCustomer,29/01/2024
