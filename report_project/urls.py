@@ -19,12 +19,15 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from .views import login, logout
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include('sales.urls', namespace='sales')),
     path("reports/", include('reports.urls', namespace='reports')),
-    path("profile/", include('profiles.urls', namespace='profiles'))
+    path("profile/", include('profiles.urls', namespace='profiles')),
+    path('login/', login, name='login'),
+    path('logout', logout, name='logout')
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

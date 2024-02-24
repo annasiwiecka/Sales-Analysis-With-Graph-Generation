@@ -6,6 +6,8 @@ from django.template.loader import get_template
 from xhtml2pdf import pisa
 import csv
 from django.utils.dateparse import parse_date
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .utils import get_report_image
 from products.models import Product
@@ -17,20 +19,21 @@ from sales.models import Sale, Position, CSV
 # Create your views here.
 
 
-class ReportListView(ListView):
+class ReportListView(LoginRequiredMixin, ListView):
     model = Report
     template_name = "reports/list.html"
 
 
-class ReportDetailView(DetailView):
+class ReportDetailView(LoginRequiredMixin, DetailView):
     model = Report
     template_name = "reports/detail.html"
 
 
-class UploadTemplateView(TemplateView):
+class UploadTemplateView(LoginRequiredMixin, TemplateView):
     template_name = "reports/from_file.html"
 
 
+@login_required
 def csv_upload(request):
     if request.method == "POST":
         csv_file_name = request.FILES.get("file").name
@@ -53,7 +56,9 @@ def csv_upload(request):
                     date = parse_date(row[6])
 
                     try:
-                        product_obj = Product.objects.get(name=product, category=category)
+                        product_obj = Product.objects.get(
+                            name=product, category=category
+                        )
                     except Product.DoesNotExist:
                         product_obj = None
 
@@ -74,13 +79,13 @@ def csv_upload(request):
                         )
                         sale_obj.positions.add(position_obj)
                         sale_obj.save()
-                return JsonResponse({'ex': False})
+                return JsonResponse({"ex": False})
         else:
-            return JsonResponse({'ex': True})
+            return JsonResponse({"ex": True})
 
     return HttpResponse()
 
-
+@login_required
 def create_report(request):
     if request.headers.get("X-Requested-With") == "XMLHttpRequest":
         name = request.POST.get("name")
@@ -94,7 +99,7 @@ def create_report(request):
         return JsonResponse({"msg": "send"})
     return JsonResponse({})
 
-
+@login_required
 def render_pdf_view(request, pk):
     template_path = "reports/pdf.html"
     obj = get_object_or_404(Report, pk=pk)

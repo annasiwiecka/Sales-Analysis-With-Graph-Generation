@@ -1,10 +1,13 @@
 from django.shortcuts import render
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+
 from .models import Profile
 from .forms import ProfileForm
 
 # Create your views here.
 
+@login_required
 def my_profile(request):
     profile = Profile.objects.get(user=request.user)
     if request.method == 'POST':
