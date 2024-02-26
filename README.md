@@ -1,6 +1,6 @@
 #  Sales Analysis With Graph Generation
 
-Web-application that analyses sales data by interactively selecting dates to sort the data, extracting sales data, importing data from a csv file, analysing by category, transaction id, date and presenting them by bar chart, line chart or pie chart. Creation of a report and subsequent generation of a pdf report
+Web-application that analyses sales data by interactively selecting conditions to analysis the data, extracting sales data, importing data from a csv file, analysing by category, transaction id, date and presenting them by bar chart, line chart or pie chart. Creation of a report and subsequent generation of a pdf report
 
 ## Installation
 
@@ -62,6 +62,18 @@ On macOS or Linux:
 # Project
 
 ## Content
+
+### Login
+
+### Selection of analysis conditions 
+
+### Extract sales data
+
+### Analysis by category, transaction id, date with chart presentation
+
+### Import data from CSV file
+
+### Reports
 
 # Other information
 
