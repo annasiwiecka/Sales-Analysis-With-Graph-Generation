@@ -59,6 +59,8 @@ On macOS or Linux:
 - **Pillow**: Python image handling library.
     - Version: 10.1.0
 
+- **Dropzone.js**:  provides easy to use drag'n'drop file uploads with image previews.
+
 # Project
 
 ## Content
