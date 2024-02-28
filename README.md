@@ -57,20 +57,20 @@ Web-application that analyses sales data by interactively searching data for ana
 
 ### Searching data
 
-![SearchingData](./imagesforreadme.png)
+![SearchingData](./imagesforreadme/serachingdata.png.png)
 
 You can search for data by date. You have to also select the chart type: bar chart line chart or pie chart and from which angle you want to analyse the data: transaction, category or sales date.
 
 ### Extract sales data
 
-![ExtractSalesData](./imagesforreadme.png)
-![ExtractSalesData1](.imagesforreadme1.png)
+![ExtractSalesData](./imagesforreadme/extractsalestata.png.png)
+![ExtractSalesData1](./imagesforreadme/extractsalesdata1.png.png)
 
 There is a tables with sales, positions and merged table with sales and positions
 
 ### Analysis by category, transaction id, date with chart presentation
 
-![analyze](./imagesforeadme.png)
+![analyze](./imagesforreadme/analyze.png.png)
 
 Tables are grouped: transaction with prices and categories with prices.
 Based on higher tables it is possible to analyse by date.
@@ -84,7 +84,7 @@ We have a choice of bar chart, line chart, pie chart.
 ### Sales page
 
 ![salespage](./imagesforreadme/salespage.png)
-![tranaction](./imagesforreadme/transactiondetail.png)
+![transaction](./imagesforreadme/transactiondetail.png)
 
 On the sales page we have the id of each transaction and when we go into a specific transaction there are details of that transaction.
 
