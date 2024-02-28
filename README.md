@@ -1,24 +1,7 @@
 #  Sales Analysis With Graph Generation
 
-Web-application that analyses sales data by interactively selecting conditions to analysis the data, extracting sales data, importing data from a csv file, analysing by category, transaction id, date and presenting them by bar chart, line chart or pie chart. Creation of a report and subsequent generation of a pdf report
+Web-application that analyses sales data by interactively searching data for analyzing, extracting sales data, importing data from a csv file, analyzing by category, transaction id, date and presenting them by bar chart, line chart or pie chart. Creation of a report and generation of pdf report.
 
-## Installation
-
-1. First, clone the repository.
-2. Install requirements
-
-```python
-    'pip install -r requirements.txt'
-```
-3. Next, run
-
-```python
-On windows:
-    'python manage.py runserver'
-
-On macOS or Linux:
-    'python3 manage.py runserver'
-```
 ## Technologies
 - **Python**: Main programming language.
     -  Version 3.12
@@ -65,17 +48,59 @@ On macOS or Linux:
 
 ## Content
 
-### Login
+1. [Searching data](#searching-data)
+2. [Extract sales data](#extract-sales-data)
+3. [Analysis by category, transaction id, date with chart presentation](#analysis-by-category-transaction-id-date-with-chart-presentation)
+4. [Sales page](#sales-page)
+5. [Import data from CSV file](#import-data-from-csv-file)
+6. [Reports](#reports)
 
-### Selection of analysis conditions 
+### Searching data
+
+![SearchingData](./imagesforreadme.png)
+
+You can search for data by date. You have to also select the chart type: bar chart line chart or pie chart and from which angle you want to analyse the data: transaction, category or sales date.
 
 ### Extract sales data
 
+![ExtractSalesData](./imagesforreadme.png)
+![ExtractSalesData1](.imagesforreadme1.png)
+
+There is a tables with sales, positions and merged table with sales and positions
+
 ### Analysis by category, transaction id, date with chart presentation
+
+![analyze](./imagesforeadme.png)
+
+Tables are grouped: transaction with prices and categories with prices.
+Based on higher tables it is possible to analyse by date.
+
+![barchart](./imagesforreadme/barchart.png)
+![linechart](./imagesforreadme/linechart.png)
+![piechart](./imagesforreadme/piechart.png)
+
+We have a choice of bar chart, line chart, pie chart.
+
+### Sales page
+
+![salespage](./imagesforreadme/salespage.png)
+![tranaction](./imagesforreadme/transactiondetail.png)
+
+On the sales page we have the id of each transaction and when we go into a specific transaction there are details of that transaction.
 
 ### Import data from CSV file
 
+![import](./imagesforreadme/import.png)
+
+You can add a CSV files that does not exceed 3mb, up to a maximum of 3 files.
+
 ### Reports
+
+![addreport](./imagesforreadme/addreport.png)
+![reportdetail](./imagesforreadme/reportdetail.png)
+![reportpdf](./imagesforreadme/reportpdf.png)
+
+You can create a report with a specific choice of analysis (by category, transaction, sales date). All reports are on the reports page, you can go to the report details. You can create and download a pdf file.
 
 # Other information
 
